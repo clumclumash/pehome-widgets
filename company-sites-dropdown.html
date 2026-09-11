@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Company Sites</title>
+<style>
+  /* Transparent so it blends into the SharePoint page behind the iframe */
+  html, body{
+    margin:0; padding:0; background:transparent;
+    font-family:"Segoe UI","Segoe UI Web (West European)",-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",Arial,sans-serif;
+  }
+  *{box-sizing:border-box;}
+
+  /* --- widget, prefixed pe- to avoid clashing with anything on the host page --- */
+  .pe-site-switcher{position:relative;display:inline-block;}
+  .pe-dropdown-btn{
+    display:inline-flex;align-items:center;gap:8px;
+    background:#a74411;color:#fff;border:none;border-left:4px solid #e58124;
+    border-radius:3px;padding:11px 16px;font-size:13.5px;font-weight:700;
+    font-family:inherit;cursor:pointer;line-height:1;
+  }
+  .pe-dropdown-btn:hover{background:#8a3a0e;}
+  .pe-dropdown-btn:focus-visible{outline:2px solid #e58124;outline-offset:2px;}
+  .pe-dropdown-btn svg{width:12px;height:12px;transition:transform .15s ease;flex:none;}
+  .pe-site-switcher[data-open="true"] .pe-dropdown-btn svg{transform:rotate(180deg);}
+  .pe-dropdown-menu{
+    position:absolute;top:calc(100% + 6px);left:0;min-width:230px;
+    background:#ffffff;border:1px solid #e2e2e2;border-radius:4px;
+    box-shadow:0 8px 20px -10px rgba(20,20,20,.35);padding:6px;display:none;z-index:20;
+  }
+  .pe-site-switcher[data-open="true"] .pe-dropdown-menu{display:block;}
+  .pe-dropdown-menu a{
+    display:block;padding:9px 10px;border-radius:3px;text-decoration:none;
+    color:#201f1e;font-size:13px;font-weight:600;
+  }
+  .pe-dropdown-menu a:hover,.pe-dropdown-menu a:focus-visible{background:#f5e6de;color:#8a3a0e;outline:none;}
+  .pe-dropdown-menu a span{display:block;font-size:11px;font-weight:400;color:#8a8a8a;margin-top:1px;}
+  /* --- end widget --- */
+</style>
+</head>
+<body>
+
+  <div class="pe-site-switcher" id="peSwitcher" data-open="false">
+    <button type="button" class="pe-dropdown-btn" id="peSwitcherBtn" aria-haspopup="true" aria-expanded="false">
+      Browse Our Sites
+      <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="pe-dropdown-menu" id="peSwitcherMenu" role="menu" aria-label="Company sites">
+      <!-- Replace these three hrefs with your real site URLs -->
+      <a href="https://peconstruct.sharepoint.com/sites/PEConstruction" role="menuitem">P&amp;E Construction<span>Field ops, safety &amp; project sites</span></a>
+      <a href="https://peconstruct.sharepoint.com/sites/PECompany" role="menuitem">P&amp;E Company<span>Corporate &amp; leadership</span></a>
+      <a href="https://peconstruct.sharepoint.com/sites/PEBusinessServices" role="menuitem">P&amp;E Business Services<span>Finance, HR &amp; IT</span></a>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var root = document.getElementById('peSwitcher');
+      var btn = document.getElementById('peSwitcherBtn');
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var open = root.getAttribute('data-open') === 'true';
+        root.setAttribute('data-open', open ? 'false' : 'true');
+        btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+      });
+      document.addEventListener('click', function () {
+        root.setAttribute('data-open', 'false');
+        btn.setAttribute('aria-expanded', 'false');
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+          root.setAttribute('data-open', 'false');
+          btn.setAttribute('aria-expanded', 'false');
+        }
+      });
+    })();
+  </script>
+
+</body>
+</html>
